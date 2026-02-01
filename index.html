@@ -2,17 +2,120 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Loading...</title>
+  <title>Important Question</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Instant redirect -->
-  <meta http-equiv="refresh" content="0; url=https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #141e30, #243b55);
+      color: white;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
 
-  <script>
-    // Backup redirect in case meta refresh is blocked
-    window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-  </script>
+    .box {
+      background: rgba(0,0,0,0.45);
+      padding: 30px;
+      border-radius: 14px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    #status {
+      margin-top: 15px;
+      font-size: 16px;
+      display: none;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 12px 30px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      position: absolute;
+      transition: transform 0.15s;
+    }
+
+    .true {
+      background: #4CAF50;
+      color: white;
+      left: 25%;
+      top: 60%;
+    }
+
+    .false {
+      background: #f44336;
+      color: white;
+      left: 55%;
+      top: 60%;
+    }
+  </style>
 </head>
 <body>
-  <p>Loading, please wait...</p>
+
+  <div class="box">
+    <h1>Is LEONEL handsome?</h1>
+    <div id="status">🤔 Thinking...</div>
+  </div>
+
+  <button class="true" id="trueBtn">TRUE</button>
+  <button class="false" id="falseBtn">FALSE</button>
+
+  <!-- Sound effect -->
+  <audio id="beep">
+    <source src="https://www.soundjay.com/buttons/sounds/button-3.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const buttons = document.querySelectorAll("button");
+    const statusText = document.getElementById("status");
+    const beep = document.getElementById("beep");
+
+    // Move buttons randomly (desktop + mobile)
+    function moveButton(btn) {
+      const maxX = window.innerWidth - btn.offsetWidth;
+      const maxY = window.innerHeight - btn.offsetHeight;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      btn.style.left = x + "px";
+      btn.style.top = y + "px";
+    }
+
+    buttons.forEach(btn => {
+      // Desktop hover
+      btn.addEventListener("mouseenter", () => moveButton(btn));
+
+      // Mobile touch
+      btn.addEventListener("touchstart", () => moveButton(btn));
+
+      // Click = fake thinking + sound + rickroll
+      btn.addEventListener("click", () => {
+        statusText.style.display = "block";
+        beep.play();
+
+        setTimeout(() => {
+          window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+        }, 2500);
+      });
+    });
+
+    // Force mobile fullscreen
+    document.documentElement.requestFullscreen?.();
+  </script>
+
 </body>
 </html>
